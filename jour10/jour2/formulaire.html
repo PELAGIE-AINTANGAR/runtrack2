@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire</title>
+    <link rel="stylesheet" href="formulaire.css">
+</head>
+<body>
+    <form method="post" action="index.php">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Capacité</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                //connexion a la base de donnees
+                $servername = 'localhost';
+                $username = 'root';
+                $password = 'root';
+                // connexion a la base de donnees avec PDO
+                $conn = new PDO("mysql:host=$servername;dbname=jour9", $username, $password);
+                // requete pour recuperer les noms et capacites de chacune des salles
+                $sql = "SELECT salles.nom, salles.capacite FROM salles";
+                $resultat = $conn->query($sql);
+                
+                while ($row = $resultat->fetch(PDO::FETCH_ASSOC)) {
+                    echo '<tr>';
+                    echo '<td>' . $row['nom'] . '</td>';
+                    echo '<td>' . $row['capacite'] . '</td>';
+                    echo '</tr>';
+                }
+                ?>
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>
